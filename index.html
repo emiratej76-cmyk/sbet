@@ -19,7 +19,6 @@ body{background:#0a0a0a;color:white;padding-bottom:60px}
 .score{color:#E10600;font-weight:900;font-size:18px}
 .odds{display:flex;gap:6px;margin-top:10px}
 .odd-btn{flex:1;background:#222;padding:10px;text-align:center;border-radius:8px;cursor:pointer}
-.odd-btn:active{background:#00FF88;color:#000}
 .odd-num{color:#00FF88;font-weight:900;font-size:16px}
 .betslip{position:fixed;bottom:60px;width:100%;background:#1a1a1a;padding:12px;border-top:2px solid #00FF88;display:none}
 .betslip.show{display:block}
@@ -33,6 +32,7 @@ body{background:#0a0a0a;color:white;padding-bottom:60px}
 .tab-deposit{flex:1;text-align:center;padding:12px;font-weight:700;color:#888}
 .tab-deposit.active{color:white;border-bottom:2px solid #00FF88}
 .box{background:#141414;margin:10px;border-radius:8px;padding:14px;display:flex;justify-content:space-between}
+.momo-balance{color:#888;font-size:13px;text-align:right;padding:0 10px}
 .input-amount{margin:10px;padding:12px;background:#141414;border-radius:8px}
 .input-amount input{background:#222;border:none;color:white;width:100%;padding:10px;font-size:16px}
 .quick-amounts{display:flex;gap:8px;margin:10px}
@@ -80,22 +80,13 @@ body{background:#0a0a0a;color:white;padding-bottom:60px}
 </div>
 
 <!-- GAMES PAGE -->
-<div id="gamesPage" class="page">
-<div class="header"><div class="logo">🎮 Games</div></div>
-<div class="match-card">Aviator, Mines, Slots - Coming Soon</div>
-</div>
+<div id="gamesPage" class="page"><div class="header"><div class="logo">🎮 Games</div></div><div class="match-card">Aviator, Mines - Coming Soon</div></div>
 
 <!-- OPEN BETS PAGE -->
-<div id="betsPage" class="page">
-<div class="header"><div class="logo">📋 Open Bets</div></div>
-<div class="match-card" id="openBetsList">No open bets yet</div>
-</div>
+<div id="betsPage" class="page"><div class="header"><div class="logo">📋 Open Bets</div></div><div class="match-card" id="openBetsList">No open bets yet</div></div>
 
 <!-- ME PAGE -->
-<div id="mePage" class="page">
-<div class="header"><div class="logo">👤 My Account</div></div>
-<div class="match-card">Balance: <span id="meBalance">GHS 1250.00</span></div>
-</div>
+<div id="mePage" class="page"><div class="header"><div class="logo">👤 My Account</div></div><div class="match-card">SBET Balance: <span id="meBalance">GHS 1250.00</span><br>Mo Balance: <span id="meMomo">GHS 5000.00</span></div></div>
 
 <!-- DEPOSIT PAGE -->
 <div id="depositPage" class="page">
@@ -112,6 +103,8 @@ body{background:#0a0a0a;color:white;padding-bottom:60px}
 
 <div class="box"><div>📱 +233 53****387</div><div style="color:#00FF88">Switch ></div></div>
 <div class="box"><div>MTN Mobile Money</div><div style="color:#00FF88">Switch ></div></div>
+
+<div class="momo-balance">Mo Wallet Balance: <span id="momoBalance">GHS 5000.00</span></div>
 
 <div class="input-amount">
 <input type="number" id="amount" placeholder="Amount (GHS)" min="1">
@@ -131,18 +124,21 @@ body{background:#0a0a0a;color:white;padding-bottom:60px}
 <div class="note">
 1. Maximum per transaction is GHS 50,000.00<br>
 2. Minimum per transaction is GHS 1.00<br>
-3. Deposit is free, no transaction fees.
+3. Money will be deducted from your MoMo Wallet
 </div>
 </div>
 
 <script>
-let balance = 1250;
+let sbetBalance = 1250;
+let momoBalance = 5000; // THIS IS YOUR MOBILE MONEY WALLET
 let betslip = [];
 let openBets = [];
 
 function updateBalance(){
-document.getElementById('balance').innerText = 'GHS ' + balance.toFixed(2);
-document.getElementById('meBalance').innerText = 'GHS ' + balance.toFixed(2);
+document.getElementById('balance').innerText = 'GHS ' + sbetBalance.toFixed(2);
+document.getElementById('meBalance').innerText = 'GHS ' + sbetBalance.toFixed(2);
+document.getElementById('momoBalance').innerText = 'GHS ' + momoBalance.toFixed(2);
+document.getElementById('meMomo').innerText = 'GHS ' + momoBalance.toFixed(2);
 }
 
 function showPage(pageId){
@@ -158,21 +154,31 @@ document.getElementById('bet-items').innerHTML = betslip.join('<br>');
 }
 
 function placeBet(){
-if(balance >= 10){
-balance -= 10;
+if(sbetBalance >= 10){
+sbetBalance -= 10;
 updateBalance();
 openBets.push('Bet: ' + betslip.join(', ') + ' - GHS 10');
 alert('Bet Placed for GHS 10!');
 betslip = [];
 document.getElementById('betslip').classList.remove('show');
-}else{alert('Not enough balance! Deposit first');}
+}else{alert('Not enough SBET balance! Deposit first');}
 }
 
 function setAmount(val){document.getElementById('amount').value = val;}
+
 function topUp(){
 let amount = parseFloat(document.getElementById('amount').value);
-if(amount >= 1){balance += amount;updateBalance();alert('GHS ' + amount + ' Deposited!');showPage('homePage');}
-else{alert('Minimum deposit is GHS 1.00');}
+if(amount >= 1){
+if(momoBalance >= amount){
+momoBalance -= amount; // CUT FROM MOMO
+sbetBalance += amount; // ADD TO SBET
+updateBalance();
+alert('GHS ' + amount + ' Deducted from MoMo and Deposited to SBET!');
+showPage('homePage');
+}else{
+alert('Insufficient MoMo Balance! Your MoMo has only GHS ' + momoBalance.toFixed(2));
+}
+}else{alert('Minimum deposit is GHS 1.00');}
 </script>
 
 </body>
