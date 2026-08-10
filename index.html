@@ -3,19 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SBET</title>
+  <title>SBET - Sports Betting</title>
   <style>
-    body{background:#0f2027;color:white;text-align:center;font-family:Arial;padding:50px;margin:0}
-    h1{color:#00ff88;font-size:50px}
-    .card{background:#1a2e35;padding:20px;border-radius:10px;margin:20px auto;max-width:400px}
+    body{background:#0f2027;color:white;font-family:Arial;margin:0;padding:20px}
+    h1{color:#00ff88;text-align:center;font-size:40px}
+    .container{max-width:600px;margin:auto}
+    .card{background:#1a2e35;padding:20px;border-radius:10px;margin:15px 0}
+    .btn{background:#00ff88;color:#000;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;width:100%;margin:5px 0;cursor:pointer;font-size:16px}
+    .btn:hover{background:#00cc6a}
+    .odds{display:flex;justify-content:space-between}
+    input{width:100%;padding:10px;border-radius:8px;border:none;margin:5px 0;background:#2a3e45;color:white}
+    .balance{font-size:24px;color:#00ff88;text-align:center}
   </style>
 </head>
 <body>
-  <h1>🔥 SBET IS LIVE 🔥</h1>
-  <div class="card">
-    <h2>Your Balance: $1,250.00</h2>
-    <h3>Live Match: Man United vs Liverpool</h3>
-    <p>Welcome to SBET!</p>
+  <div class="container">
+    <h1>🔥 SBET 🔥</h1>
+    
+    <div class="card">
+      <h2>Your Account</h2>
+      <p class="balance">Balance: $1,250.00</p>
+      <input type="number" placeholder="Deposit Amount $">
+      <button class="btn">💰 DEPOSIT</button>
+      <button class="btn" style="background:#ff4444;color:white">WITHDRAW</button>
+    </div>
+
+    <div class="card">
+      <h2>🔴 LIVE: Man United vs Liverpool</h2>
+      <div class="odds">
+        <span>Man United Win</span>
+        <span style="color:#00ff88">2.10</span>
+      </div>
+      <button class="btn">BET $10</button>
+      
+      <div class="odds">
+        <span>Draw</span>
+        <span style="color:#00ff88">3.40</span>
+      </div>
+      <button class="btn">BET $10</button>
+
+      <div class="odds">
+        <span>Liverpool Win</span>
+        <span style="color:#00ff88">3.00</span>
+      </div>
+      <button class="btn">BET $10</button>
+    </div>
+
+    <div class="card">
+      <h2>⚽ Tomorrow: Real Madrid vs Barcelona</h2>
+      <div class="odds"><span>Real Madrid</span><span style="color:#00ff88">2.50</span></div>
+      <button class="btn">BET $10</button>
+    </div>
+
+    <p style="text-align:center;color:#888">Welcome to SBET! Bet responsibly 18+</p>
   </div>
 </body>
 </html>
