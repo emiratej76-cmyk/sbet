@@ -1,30 +1,35 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SBET</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-    body{background:#121212;color:white}
-    .header{background:#D32F2F;padding:10px;display:flex;justify-content:space-between;align-items:center}
-    .logo{color:white;font-size:24px;font-weight:bold}
-    .deposit-btn{background:white;color:#D32F2F;padding:8px 15px;border-radius:20px;border:none;font-weight:bold}
-    .balance{background:#333;padding:8px 15px;border-radius:20px}
-    .nav{display:flex;background:#1e1e1e;overflow-x:auto}
-    .nav-item{padding:12px 15px;white-space:nowrap;color:#aaa;text-align:center}
-    .nav-item.active{color:#00ff88;border-bottom:3px solid #00ff88}
-    .tabs{display:flex;background:#1e1e1e}
-    .tab{flex:1;padding:12px;text-align:center;background:#2a2a2a;margin:2px;border-radius:5px}
-    .tab.active{background:#D32F2F}
-    .match-card{background:#1e1e1e;margin:10px;border-radius:8px;padding:12px}
-    .league{color:#00ff88;font-size:12px}
-    .teams{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
-    .odds{display:flex;gap:5px}
-    .odd-btn{flex:1;background:#2a2a2a;padding:8px;text-align:center;border-radius:5px}
-    .odd-btn .num{color:#00ff88;font-weight:bold}
-    .bottom-nav{position:fixed;bottom:0;width:100%;display:flex;background:#1e1e1e;padding:8px 0}
-    .bottom-item{flex:1;text-align:center;font-size:12px}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,Arial}
+    body{background:#0a0a0a;color:white;padding-bottom:70px}
+    .header{background:#E10600;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+    .logo{font-size:22px;font-weight:900}
+    .deposit-btn{background:white;color:#E10600;padding:7px 16px;border-radius:20px;border:none;font-weight:700;font-size:14px}
+    .balance{background:#00060;padding:7px 14px;border-radius:20px;font-size:14px;font-weight:700}
+    .nav{display:flex;background:#141414;padding:0 5px;overflow-x:auto}
+    .nav-item{padding:14px 12px;white-space:nowrap;color:#888;font-size:14px;font-weight:600}
+    .nav-item.active{color:#00FF88;border-bottom:2px solid #00FF88}
+    .tabs{display:flex;padding:10px;gap:8px}
+    .tab{flex:1;padding:10px;text-align:center;background:#1a1a1a;border-radius:8px;font-weight:700;font-size:13px}
+    .tab.active{background:#E10600}
+    .match-card{background:#141414;margin:10px;border-radius:12px;padding:14px;box-shadow:0 2px 8px #000}
+    .league{color:#00FF88;font-size:11px;font-weight:700;margin-bottom:8px}
+    .teams{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+    .team-name{font-weight:700;font-size:15px}
+    .time{font-size:12px;color:#888}
+    .odds{display:flex;gap:6px;margin-top:10px}
+    .odd-btn{flex:1;background:#222;padding:10px 5px;text-align:center;border-radius:8px;transition:0.2s}
+    .odd-btn:active{background:#333;transform:scale(0.95)}
+    .odd-label{font-size:12px;color:#aaa}
+    .odd-num{color:#00FF88;font-weight:900;font-size:16px;margin-top:2px}
+    .bottom-nav{position:fixed;bottom:0;width:100%;display:flex;background:#141414;padding:8px 0;border-top:1px solid #222}
+    .bottom-item{flex:1;text-align:center;font-size:11px;color:#888}
+    .bottom-item.active{color:#00FF88}
   </style>
 </head>
 <body>
@@ -53,39 +58,38 @@
     <div class="league">🔥 Football - Portugal - Liga Portugal</div>
     <div class="teams">
       <div>
-        <div>Santa Clara Azores</div>
-        <div style="font-size:12px;color:#aaa">23:15 Today</div>
+        <div class="team-name">Santa Clara Azores</div>
+        <div class="time">23:15 Today</div>
       </div>
-      <div>1X2</div>
-      <div>Nacional da Madeira</div>
+      <div style="color:#888;font-weight:700">1X2</div>
+      <div class="team-name">Nacional da Madeira</div>
     </div>
     <div class="odds">
-      <div class="odd-btn"><div>1</div><div class="num">1.97</div></div>
-      <div class="odd-btn"><div>X</div><div class="num">3.24</div></div>
-      <div class="odd-btn"><div>2</div><div class="num">4.67</div></div>
+      <div class="odd-btn"><div class="odd-label">1</div><div class="odd-num">1.97</div></div>
+      <div class="odd-btn"><div class="odd-label">X</div><div class="odd-num">3.24</div></div>
+      <div class="odd-btn"><div class="odd-label">2</div><div class="odd-num">4.67</div></div>
     </div>
   </div>
 
   <div class="match-card">
     <div class="league">🔴 LIVE - Sweden - Allsvenskan</div>
     <div class="teams">
-      <div>IK Sirius</div>
-      <div>45:00+ H1</div>
-      <div>IF Brommapojkarna</div>
+      <div class="team-name">IK Sirius</div>
+      <div class="time">45:00+ H1</div>
+      <div class="team-name">IF Brommapojkarna</div>
     </div>
     <div class="odds">
-      <div class="odd-btn"><div>1</div><div class="num">1.75</div></div>
-      <div class="odd-btn"><div>X</div><div class="num">3.10</div></div>
-      <div class="odd-btn"><div>2</div><div class="num">5.90</div></div>
+      <div class="odd-btn"><div class="odd-label">1</div><div class="odd-num">1.75</div></div>
+      <div class="odd-btn"><div class="odd-label">X</div><div class="odd-num">3.10</div></div>
+      <div class="odd-btn"><div class="odd-label">2</div><div class="odd-num">5.90</div></div>
     </div>
   </div>
 
-  <div style="height:70px"></div>
   <div class="bottom-nav">
-    <div class="bottom-item">🏠<br>Home</div>
+    <div class="bottom-item active">🏠<br>Home</div>
     <div class="bottom-item">🎮<br>Games</div>
     <div class="bottom-item">📋<br>Open Bets</div>
     <div class="bottom-item">👤<br>Me</div>
   </div>
 </body>
-</html>  
+</html>
