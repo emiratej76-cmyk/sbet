@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     body{background:#0a0a0a;color:white;padding-bottom:120px}
     .header{background:#E10600;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
     .logo{font-size:22px;font-weight:900}
-    .deposit-btn{background:white;color:#E10600;padding:7px 16px;border-radius:20px;border:none;font-weight:700}
+    .btn{background:white;color:#E10600;padding:7px 14px;border-radius:20px;border:none;font-weight:700;font-size:13px;margin-left:5px}
     .balance{background:#000;padding:7px 14px;border-radius:20px;font-weight:700}
     .nav{display:flex;background:#141414;overflow-x:auto}
     .nav-item{padding:14px 12px;white-space:nowrap;color:#888;font-weight:600}
@@ -21,7 +21,7 @@
     .league{color:#00FF88;font-size:11px;font-weight:700;margin-bottom:8px}
     .teams{display:flex;justify-content:space-between;align-items:center}
     .team{display:flex;align-items:center;gap:8px}
-    .logo-img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+    .logo-img{width:32px;height:32px;border-radius:50%;object-fit:cover;background:#333}
     .team-name{font-weight:700;font-size:14px}
     .time{font-size:12px;color:#888;margin-left:40px}
     .odds{display:flex;gap:6px;margin-top:10px}
@@ -42,7 +42,10 @@
 <body>
   <div class="header">
     <div class="logo">🔥 SBET</div>
-    <button class="deposit-btn" onclick="showDeposit()">Deposit</button>
+    <div>
+      <button class="btn" onclick="showDeposit()">Deposit</button>
+      <button class="btn" onclick="showWithdraw()">Withdraw</button>
+    </div>
     <div class="balance" id="balance">GHS 1,250.00</div>
   </div>
 
@@ -63,13 +66,13 @@
     <div class="league">🔥 Football - Portugal - Liga Portugal</div>
     <div class="teams">
       <div class="team">
-        <img src="https://resources.premierleague.com/premierleague/badges/t1.png" class="logo-img">
+        <img src="https://flagcdn.com/w40/pt.png" class="logo-img">
         <div class="team-name">Santa Clara</div>
       </div>
       <div style="color:#888;font-weight:700">1X2</div>
       <div class="team">
         <div class="team-name">Nacional</div>
-        <img src="https://resources.premierleague.com/premierleague/badges/t3.png" class="logo-img">
+        <img src="https://flagcdn.com/w40/pt.png" class="logo-img">
       </div>
     </div>
     <div class="time">23:15 Today</div>
@@ -82,14 +85,21 @@
 
   <div id="betslip" class="betslip">
     <div id="bet-items"></div>
-    <button style="width:100%;background:#00FF88;color:#000;padding:12px;border:none;border-radius:8px;font-weight:900;margin-top:10px" onclick="placeBet()">PLACE BET</button>
+    <button style="width:100%;background:#00FF88;color:#000;padding:12px;border:none;border-radius:8px;font-weight:900;margin-top:10px" onclick="placeBet()">PLACE BET GHS 10</button>
   </div>
 
   <div id="depositPopup" class="popup">
     <h3>Deposit Money</h3>
     <input type="number" id="depositAmount" placeholder="Enter GHS Amount">
     <button style="background:#00FF88;color:#000;border:none;padding:10px;width:100%;border-radius:8px" onclick="doDeposit()">DEPOSIT</button>
-    <button style="background:#333;color:white;border:none;padding:10px;width:100%;border-radius:8px;margin-top:5px" onclick="hideDeposit()">CANCEL</button>
+    <button style="background:#333;color:white;border:none;padding:10px;width:100%;border-radius:8px;margin-top:5px" onclick="hidePopup()">CANCEL</button>
+  </div>
+
+  <div id="withdrawPopup" class="popup">
+    <h3>Withdraw Money</h3>
+    <input type="number" id="withdrawAmount" placeholder="Enter GHS Amount">
+    <button style="background:#E10600;color:white;border:none;padding:10px;width:100%;border-radius:8px" onclick="doWithdraw()">WITHDRAW</button>
+    <button style="background:#333;color:white;border:none;padding:10px;width:100%;border-radius:8px;margin-top:5px" onclick="hidePopup()">CANCEL</button>
   </div>
 
   <div class="bottom-nav">
@@ -121,25 +131,23 @@ function placeBet() {
     betslip = [];
     document.getElementById('betslip').classList.remove('show');
   } else {
-    alert('Not enough balance!');
+    alert('Not enough balance! Deposit first');
   }
 }
 
-function showDeposit() {
-  document.getElementById('depositPopup').classList.add('show');
-}
-function hideDeposit() {
+function showDeposit() {document.getElementById('depositPopup').classList.add('show');}
+function showWithdraw() {document.getElementById('withdrawPopup').classList.add('show');}
+function hidePopup() {
   document.getElementById('depositPopup').classList.remove('show');
+  document.getElementById('withdrawPopup').classList.remove('show');
 }
 function doDeposit() {
   let amount = parseFloat(document.getElementById('depositAmount').value);
-  if(amount > 0) {
-    balance += amount;
-    updateBalance();
-    hideDeposit();
-    alert('GHS ' + amount + ' Deposited!');
-  }
-}
+  if(amount > 0) {balance += amount; updateBalance(); hidePopup(); alert('GHS ' + amount + ' Deposited!');}
+function doWithdraw() {
+  let amount = parseFloat(document.getElementById('withdrawAmount').value);
+  if(amount > 0 && amount <= balance) {balance -= amount; updateBalance(); hidePopup(); alert('GHS ' + amount + ' Withdrawn!');}
+  else {alert('Not enough balance');}
 </script>
 </body>
 </html>
