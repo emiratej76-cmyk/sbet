@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -21,11 +21,11 @@
     .league{color:#00FF88;font-size:11px;font-weight:700;margin-bottom:8px}
     .teams{display:flex;justify-content:space-between;align-items:center}
     .team{display:flex;align-items:center;gap:8px}
-    .logo-circle{width:30px;height:30px;background:#333;border-radius:50%}
+    .logo-img{width:32px;height:32px;border-radius:50%;object-fit:cover}
     .team-name{font-weight:700;font-size:14px}
-    .time{font-size:12px;color:#888;margin-left:38px}
+    .time{font-size:12px;color:#888;margin-left:40px}
     .odds{display:flex;gap:6px;margin-top:10px}
-    .odd-btn{flex:1;background:#222;padding:10px;text-align:center;border-radius:8px}
+    .odd-btn{flex:1;background:#222;padding:10px;text-align:center;border-radius:8px;cursor:pointer}
     .odd-btn:active{background:#00FF88;color:#000}
     .odd-label{font-size:12px}
     .odd-num{color:#00FF88;font-weight:900;font-size:16px}
@@ -34,13 +34,16 @@
     .bottom-nav{position:fixed;bottom:0;width:100%;display:flex;background:#141414;padding:8px 0;border-top:1px solid #222}
     .bottom-item{flex:1;text-align:center;font-size:11px;color:#888}
     .bottom-item.active{color:#00FF88}
+    .popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#222;padding:20px;border-radius:12px;display:none;z-index:20}
+    .popup.show{display:block}
+    input{background:#333;color:white;border:none;padding:10px;border-radius:8px;width:200px;margin:10px 0}
   </style>
 </head>
 <body>
   <div class="header">
     <div class="logo">🔥 SBET</div>
-    <button class="deposit-btn">Deposit</button>
-    <div class="balance">GHS 1,250.00</div>
+    <button class="deposit-btn" onclick="showDeposit()">Deposit</button>
+    <div class="balance" id="balance">GHS 1,250.00</div>
   </div>
 
   <div class="nav">
@@ -48,7 +51,6 @@
     <div class="nav-item">Live</div>
     <div class="nav-item">Football</div>
     <div class="nav-item">Basketball</div>
-    <div class="nav-item">Tennis</div>
   </div>
 
   <div class="tabs">
@@ -60,9 +62,15 @@
   <div class="match-card">
     <div class="league">🔥 Football - Portugal - Liga Portugal</div>
     <div class="teams">
-      <div class="team"><div class="logo-circle"></div><div class="team-name">Santa Clara</div></div>
+      <div class="team">
+        <img src="https://resources.premierleague.com/premierleague/badges/t1.png" class="logo-img">
+        <div class="team-name">Santa Clara</div>
+      </div>
       <div style="color:#888;font-weight:700">1X2</div>
-      <div class="team"><div class="team-name">Nacional</div><div class="logo-circle"></div></div>
+      <div class="team">
+        <div class="team-name">Nacional</div>
+        <img src="https://resources.premierleague.com/premierleague/badges/t3.png" class="logo-img">
+      </div>
     </div>
     <div class="time">23:15 Today</div>
     <div class="odds">
@@ -74,7 +82,14 @@
 
   <div id="betslip" class="betslip">
     <div id="bet-items"></div>
-    <button style="width:100%;background:#00FF88;color:#000;padding:12px;border:none;border-radius:8px;font-weight:900;margin-top:10px">PLACE BET</button>
+    <button style="width:100%;background:#00FF88;color:#000;padding:12px;border:none;border-radius:8px;font-weight:900;margin-top:10px" onclick="placeBet()">PLACE BET</button>
+  </div>
+
+  <div id="depositPopup" class="popup">
+    <h3>Deposit Money</h3>
+    <input type="number" id="depositAmount" placeholder="Enter GHS Amount">
+    <button style="background:#00FF88;color:#000;border:none;padding:10px;width:100%;border-radius:8px" onclick="doDeposit()">DEPOSIT</button>
+    <button style="background:#333;color:white;border:none;padding:10px;width:100%;border-radius:8px;margin-top:5px" onclick="hideDeposit()">CANCEL</button>
   </div>
 
   <div class="bottom-nav">
@@ -85,11 +100,45 @@
   </div>
 
 <script>
+let balance = 1250;
 let betslip = [];
+
+function updateBalance() {
+  document.getElementById('balance').innerText = 'GHS ' + balance.toFixed(2);
+}
+
 function addBet(team, odds) {
   betslip.push(team + ' @ ' + odds);
   document.getElementById('betslip').classList.add('show');
   document.getElementById('bet-items').innerHTML = betslip.join('<br>');
+}
+
+function placeBet() {
+  if(balance >= 10) {
+    balance -= 10;
+    updateBalance();
+    alert('Bet Placed for GHS 10!');
+    betslip = [];
+    document.getElementById('betslip').classList.remove('show');
+  } else {
+    alert('Not enough balance!');
+  }
+}
+
+function showDeposit() {
+  document.getElementById('depositPopup').classList.add('show');
+}
+function hideDeposit() {
+  document.getElementById('depositPopup').classList.remove('show');
+}
+function doDeposit() {
+  let amount = parseFloat(document.getElementById('depositAmount').value);
+  if(amount > 0) {
+    balance += amount;
+    updateBalance();
+    hideDeposit();
+    alert('GHS ' + amount + ' Deposited!');
+  }
 }
 </script>
 </body>
