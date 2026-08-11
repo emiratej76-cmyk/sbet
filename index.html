@@ -1,3 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SBET - Football Predictions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { background:#000; color:#fff; font-family:Arial; margin:0; padding:10px; }
+.header { text-align:center; padding:10px; background:#111; }
+.wallet { color:#FFD700; font-size:18px; font-weight:bold; }
+.points { color:#00FF00; }
+.match { background:#1a1a1a; margin:10px 0; padding:15px; border-radius:8px; }
+.teams { font-size:16px; font-weight:bold; text-align:center; }
+.buttons { display:flex; justify-content:space-around; margin-top:10px; }
+.btn { background:#FFD700; color:#000; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; cursor:pointer; }
+.btn:hover { background:#FFA500; }
+.footer { text-align:center; padding:15px; font-size:13px; background:#111; color:#aaa; margin-top:20px; }
+.footer a { color:#FFD700; text-decoration:none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h2>SBET ⚽</h2>
+  <div>Coins: <span class="wallet" id="wallet">1000</span></div>
+  <div>Points: <span class="points" id="points">0</span></div>
+</div>
+
+<div class="match">
+  <div class="teams">Juventus vs AC Milan</div>
+  <div class="buttons">
+    <button class="btn" onclick="placePrediction('Juventus vs AC Milan', '1')">1 2.00</button>
+    <button class="btn" onclick="placePrediction('Juventus vs AC Milan', 'X')">X 3.20</button>
+    <button class="btn" onclick="placePrediction('Juventus vs AC Milan', '2')">2 2.50</button>
+  </div>
+</div>
+
+<div class="match">
+  <div class="teams">Bayern vs Dortmund</div>
+  <div class="buttons">
+    <button class="btn" onclick="placePrediction('Bayern vs Dortmund', '1')">1 1.80</button>
+    <button class="btn" onclick="placePrediction('Bayern vs Dortmund', 'X')">X 3.50</button>
+    <button class="btn" onclick="placePrediction('Bayern vs Dortmund', '2')">2 3.00</button>
+  </div>
+</div>
+
+<div class="footer">
+<a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms</a>
+</div>
+
+<script>
+let wallet = 1000;
+let points = 0;
+
+function updateWallet() {
+  document.getElementById('wallet').innerText = wallet;
+  document.getElementById('points').innerText = points;
+}
+
 function placePrediction(match, choice) {
   let betAmount = prompt("How many coins do you want to bet on " + match + "?\n\nYour coins: " + wallet, "100");
   
@@ -19,3 +77,9 @@ function placePrediction(match, choice) {
   alert("Prediction Placed! -" + betAmount + " Coins\n+" + Math.floor(betAmount / 10) + " Points");
   updateWallet();
 }
+
+updateWallet();
+</script>
+
+</body>
+</html>
