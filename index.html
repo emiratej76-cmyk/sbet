@@ -20,7 +20,7 @@
       .bottom-menu div { text-align:center; font-size:11px; cursor:pointer; }
       .bet-card { background:white; margin:10px; padding:12px; border-radius:8px; }
       .confetti { position:fixed; width:10px; height:10px; background:#00a651; top:0; animation: fall 2s linear forwards; z-index:9999; }
-        @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity:0; } }
+        @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity:0; }
       .cashout-success { animation: pop 0.3s ease; }
         @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.1);} 100%{transform:scale(1);} }
       .deposit-btn { background:#ffd700; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; margin-left:8px; }
@@ -37,4 +37,41 @@
 
 <div id="main-content">
 <div class="top-banners">
-    <div class="top-banner" style
+    <div class="top-banner" style="background:linear-gradient(45deg,#ff6b6b,#ee5a6f);">Daily Free Bet<br>Rains</div>
+    <div class="top-banner" style="background:linear-gradient(45deg,#4facfe,#00f2fe);">Lucky<br>Numbers</div>
+    <div class="top-banner" style="background:linear-gradient(45deg,#43e97b,#38f9d7);">Aviator<br>Missions</div>
+</div>
+<div class="category-tabs"><div>⚽ All Sports</div><div>📺 Live</div><div>✈️ Aviator</div><div>V Virtuals</div></div>
+<div class="league-tabs"><div class="league-tab" style="border-bottom:3px solid #e00000;">TODAY'S FOOTBALL</div><div class="league-tab">IN NEXT 3 HOURS</div></div>
+<h2 style="padding:10px;">Featured</h2>
+<div class="match-card">
+    <p style="font-size:12px; color:#666;">UEFA Champions League</p>
+    <div style="display:flex; justify-content:space-between;"><div>🏴 FC Kairat Almaty</div><div><b>19:00</b><br>Today</div><div>🇧🇬 PFC Levski Sofia</div></div>
+    <div class="odds-row">
+        <button class="odd-btn" onclick="placeBet(20, 'Kairat Win')"><b>1</b><br><span>2.65</span></button>
+        <button class="odd-btn" onclick="placeBet(20, 'Draw')"><b>X</b><br><span>3.21</span></button>
+        <button class="odd-btn" onclick="placeBet(20, 'Levski Win')"><b>2</b><br><span>2.85</span></button>
+    </div>
+</div>
+</div>
+
+<div class="bottom-menu">
+    <div onclick="showHome()">⚽<br>Sports</div>
+    <div onclick="alert('Menu Coming Soon')">≡<br>Menu</div>
+    <div onclick="alert('Games Coming Soon')">🎮<br>Games</div>
+    <div onclick="showBets()">💰<br>Bets</div>
+    <div onclick="alert('Profile Coming Soon')">👤<br>Me</div>
+</div>
+
+<script>
+let walletBalance = parseFloat(localStorage.getItem("sbetWallet")) || 0;
+let openBets = JSON.parse(localStorage.getItem("sbetBets")) || [];
+function updateWallet(){document.getElementById("wallet-balance").innerText = walletBalance.toFixed(2);}
+function deposit(){let a=prompt("Deposit Amount:");if(a>0){walletBalance+=parseFloat(a);localStorage.setItem("sbetWallet",walletBalance);updateWallet();alert("Deposited GHS "+a)}}
+function placeBet(amount,game){if(walletBalance>=amount){walletBalance-=amount;openBets.push({game,stake:amount,cashout:(amount*0.8).toFixed(2)});localStorage.setItem("sbetBets",JSON.stringify(openBets));localStorage.setItem("sbetWallet",walletBalance);updateWallet();alert("Bet Placed: "+game)}else{alert("Low Balance! Deposit first")}}
+function cashout(index){let bet=openBets[index];walletBalance+=parseFloat(bet.cashout);openBets.splice(index,1);localStorage.setItem("sbetBets",JSON.stringify(openBets));localStorage.setItem("sbetWallet",walletBalance);for(let i=0;i<30;i++){let c=document.createElement("div");c.className="confetti";c.style.left=Math.random()*100+"vw";c.style.background=["#00a651","#ffd700","#e00000"][Math.floor(Math.random()*3)];document.body.appendChild(c);setTimeout(()=>c.remove(),2000);}document.getElementById("wallet-balance").parentElement.classList.add("cashout-success");setTimeout(()=>document.getElementById("wallet-balance").parentElement.classList.remove("cashout-success"),300);alert("CASHOUT SUCCESSFUL! +GHS "+bet.cashout);updateWallet();showBets();}
+function showBets(){let h="<h2 style='padding:10px;'>My Bets <button onclick=showHome() style='float:right;'>Back</button></h2>";if(openBets.length==0){h+="<p style='padding:10px;'>No bets yet</p>"}openBets.forEach((b,i)=>{h+=`<div class='bet-card'><p><b>${b.game}</b></p><p>Stake: GHS ${b.stake}</p><button onclick='cashout(${i})' style='width:100%;background:#00a651;color:white;border:none;padding:10px;border-radius:6px;'>Cashout GHS ${b.cashout}</button></div>`});document.getElementById("main-content").innerHTML=h;updateWallet();}
+function showHome(){location.reload();}updateWallet();
+</script>
+</body>
+</html>
