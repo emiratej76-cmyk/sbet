@@ -1,132 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SBET Predictions</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body { margin:0; font-family: Arial; background:#f5f5f5; padding-bottom:120px; }
-   .header { background:#00a651; color:white; padding:12px; display:flex; justify-content:space-between; align-items:center; }
-   .wallet-top { font-weight:bold; color:#ffd700; }
-   .prize-banner { background:linear-gradient(45deg,#ffd700,#ff8c00); color:#000; padding:12px; text-align:center; font-weight:bold; }
-   .match-card { background:#fff; margin:10px; padding:12px; border-radius:10px; }
-   .odds-row { display:flex; justify-content:space-between; margin-top:12px; gap:8px; }
-   .odd-btn { flex:1; background:#f0f0f0; padding:10px 0; border-radius:6px; font-weight:bold; text-align:center; border:none; cursor:pointer; }
-   .odd-btn:active { background:#00a651; color:white; }
-   .odd-btn span { color:#00a651; font-size:16px; display:block; }
-   .bottom-menu { position:fixed; bottom:0; width:100%; background:white; display:flex; justify-content:space-around; padding:8px 0; border-top:1px solid #ddd; }
-   .bottom-menu div { text-align:center; font-size:11px; cursor:pointer; }
-   .leader-row { background:white; margin:5px 10px; padding:12px; border-radius:8px; display:flex; justify-content:space-between; font-weight:bold; }
-   .rank1 { border-left:5px solid gold; } .rank2 { border-left:5px solid silver; } .rank3 { border-left:5px solid #cd7f32; }
-    </style>
-</head>
-<body>
-<div class="header">
-  <h1>SBET PREDICT</h1>
-  <div class="wallet-top">COINS: <span id="wallet-balance">10000</span></div>
-</div>
-
-<div class="prize-banner">🏆 THIS WEEK: Win GHS 50 Airtime! Top 3 on Leaderboard</div>
-
-<div id="main-content"></div>
-
-<div class="bottom-menu">
-    <div onclick="showPredict()">⚽<br>Predict</div>
-    <div onclick="showLeaderboard()">🏆<br>Leaderboard</div>
-    <div onclick="alert('Invite friends to get 5000 coins!')">👥<br>Invite</div>
-    <div onclick="alert('Prizes paid every Sunday')">🎁<br>Prizes</div>
-</div>
-
-<script>
-let walletBalance = parseFloat(localStorage.getItem("sbetCoins")) || 10000;
-let predictions = JSON.parse(localStorage.getItem("sbetPreds")) || [];
-let points = parseInt(localStorage.getItem("sbetPoints")) || 0;
-
-function updateWallet(){document.getElementById("wallet-balance").innerText = walletBalance.toLocaleString();}
-
-function placePrediction(game, odds){
-  walletBalance -= 100; 
-  points += 10;
-  predictions.push({game, odds, stake:100}); 
-  localStorage.setItem("sbetCoins",walletBalance); 
-  localStorage.setItem("sbetPreds",JSON.stringify(predictions));
-  localStorage.setItem("sbetPoints",points);
-  alert("Prediction Placed! -100 Coins\n+10 Points"); 
+function placePrediction(match, choice) {
+  let betAmount = prompt("How many coins do you want to bet on " + match + "?\n\nYour coins: " + wallet, "100");
+  
+  betAmount = parseInt(betAmount);
+  
+  if(isNaN(betAmount) || betAmount <= 0) {
+    alert("Enter a valid coin amount!");
+    return;
+  }
+  
+  if(betAmount > wallet) {
+    alert("Not enough coins! You have: " + wallet);
+    return;
+  }
+  
+  wallet -= betAmount;
+  points += Math.floor(betAmount / 10); // 10 points for every 100 coins
+  
+  alert("Prediction Placed! -" + betAmount + " Coins\n+" + Math.floor(betAmount / 10) + " Points");
   updateWallet();
 }
-
-function showPredict(){
-  document.getElementById("main-content").innerHTML = `
-  <h2 style="padding:10px;">Today's Predictions</h2>
-  
-  <div class="match-card">
-      <p style="font-size:12px; color:#666;">Premier League</p>
-      <div style="display:flex; justify-content:space-between;"><div>🏴 Arsenal</div><div><b>19:00</b></div><div>🇧🇪 Man City</div></div>
-      <div class="odds-row">
-          <button class="odd-btn" onclick="placePrediction('Arsenal Win', 2.10)">1<br><span>2.10</span></button>
-          <button class="odd-btn" onclick="placePrediction('Draw', 3.40)">X<br><span>3.40</span></button>
-          <button class="odd-btn" onclick="placePrediction('Man City Win', 2.80)">2<br><span>2.80</span></button>
-      </div>
-  </div>
-
-  <div class="match-card">
-      <p style="font-size:12px; color:#666;">La Liga</p>
-      <div style="display:flex; justify-content:space-between;"><div>🇪🇸 Real Madrid</div><div><b>21:00</b></div><div>🇪🇸 Barcelona</div></div>
-      <div class="odds-row">
-          <button class="odd-btn" onclick="placePrediction('Real Win', 2.30)">1<br><span>2.30</span></button>
-          <button class="odd-btn" onclick="placePrediction('Draw', 3.20)">X<br><span>3.20</span></button>
-          <button class="odd-btn" onclick="placePrediction('Barca Win', 2.90)">2<br><span>2.90</span></button>
-      </div>
-  </div>
-
-  <div class="match-card">
-      <p style="font-size:12px; color:#666;">Serie A</p>
-      <div style="display:flex; justify-content:space-between;"><div>🇮🇹 Juventus</div><div><b>20:45</b></div><div>🇮🇹 AC Milan</div></div>
-      <div class="odds-row">
-          <button class="odd-btn" onclick="placePrediction('Juve Win', 2.00)">1<br><span>2.00</span></button>
-          <button class="odd-btn" onclick="placePrediction('Draw', 3.30)">X<br><span>3.30</span></button>
-          <button class="odd-btn" onclick="placePrediction('Milan Win', 3.10)">2<br><span>3.10</span></button>
-      </div>
-  </div>
-
-  <div class="match-card">
-      <p style="font-size:12px; color:#666;">Bundesliga</p>
-      <div style="display:flex; justify-content:space-between;"><div>🇩🇪 Bayern</div><div><b>18:30</b></div><div>🇩🇪 Dortmund</div></div>
-      <div class="odds-row">
-          <button class="odd-btn" onclick="placePrediction('Bayern Win', 1.70)">1<br><span>1.70</span></button>
-          <button class="odd-btn" onclick="placePrediction('Draw', 3.80)">X<br><span>3.80</span></button>
-          <button class="odd-btn" onclick="placePrediction('Dortmund Win', 4.20)">2<br><span>4.20</span></button>
-      </div>
-  </div>
-
-  <div class="match-card">
-      <p style="font-size:12px; color:#666;">Ghana Premier League</p>
-      <div style="display:flex; justify-content:space-between;"><div>🇬🇭 Hearts</div><div><b>15:00</b></div><div>🇬🇭 Kotoko</div></div>
-      <div class="odds-row">
-          <button class="odd-btn" onclick="placePrediction('Hearts Win', 2.20)">1<br><span>2.20</span></button>
-          <button class="odd-btn" onclick="placePrediction('Draw', 2.80)">X<br><span>2.80</span></button>
-          <button class="odd-btn" onclick="placePrediction('Kotoko Win', 2.70)">2<br><span>2.70</span></button>
-      </div>
-  </div>
-  `;
-}
-
-function showLeaderboard(){
-  document.getElementById("main-content").innerHTML = `
-  <h2 style="padding:10px;">🏆 Weekly Leaderboard</h2>
-  <div class="leader-row rank1"><span>1. You</span><span>${points} pts</span></div>
-  <div class="leader-row rank2"><span>2. Kwame</span><span>240 pts</span></div>
-  <div class="leader-row rank3"><span>3. Ama</span><span>180 pts</span></div>
-  <div class="leader-row"><span>4. Kofi</span><span>150 pts</span></div>
-  <div class="leader-row"><span>5. Aisha</span><span>120 pts</span></div>
-  <p style="text-align:center; padding:10px; color:#666;">Make predictions to climb! Resets every Sunday</p>`;
-}
-
-showPredict();
-updateWallet();
-</script>
-</body>
-</html>
-<div style="text-align:center; padding:15px; font-size:13px; background:#111; color:#aaa;">
-<a href="privacy.html" style="color:#FFD700;">Privacy Policy</a> | 
-<a href="terms.html" style="color:#FFD700;">Terms</a>
-</div>
