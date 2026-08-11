@@ -1,30 +1,30 @@
-body {
-    background: #0d1117;
-    color: white;
-    font-family: Arial;
-    padding: 10px;
+let wallet = parseFloat(localStorage.getItem('wallet')) || 0;
+
+function updateWallet() {
+    document.getElementById('wallet-balance').innerText = `Mo Wallet: GHS ${wallet.toFixed(2)}`;
+    localStorage.setItem('wallet', wallet);
 }
-h1 {
-    color: #00ff88;
-    text-align: center;
+
+function deposit() {
+    let amount = parseFloat(prompt("Enter deposit amount:"));
+    if(amount > 0) { wallet += amount; updateWallet(); }
 }
-#wallet-balance {
-    background: #161b22;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 18px;
+
+function withdraw() {
+    let amount = parseFloat(prompt("Enter withdraw amount:"));
+    if(amount > 0 && amount <= wallet) { wallet -= amount; updateWallet(); }
 }
-button {
-    background: #00ff88;
-    color: black;
-    border: none;
-    padding: 12px;
-    margin: 5px;
-    border-radius: 8px;
-    font-weight: bold;
-    width: 100%;
+
+function placeBet(amount) {
+    if(amount <= wallet) { wallet -= amount; updateWallet(); alert(`Bet of GHS ${amount} placed!`); }
+    else { alert("Not enough money!"); }
 }
-button:hover {
-    background: #00cc70;
+
+function winBet(stake, odds) {
+    let winnings = stake * odds;
+    wallet += winnings;
+    updateWallet();
+    alert(`You won GHS ${winnings.toFixed(2)}!`);
 }
+
+updateWallet(); // load wallet on start
