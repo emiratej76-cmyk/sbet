@@ -16,8 +16,9 @@
    .bottom-menu { position:fixed; bottom:0; width:100%; background:white; display:flex; justify-content:space-around; padding:8px 0; border-top:1px solid #ddd; }
    .bottom-menu div { text-align:center; font-size:11px; cursor:pointer; }
    .ad-banner { margin:10px; text-align:center; }
+   .leader-row { background:white; margin:5px 10px; padding:12px; border-radius:8px; display:flex; justify-content:space-between; font-weight:bold; }
+   .rank1 { border-left:5px solid gold; } .rank2 { border-left:5px solid silver; } .rank3 { border-left:5px solid #cd7f32; }
     </style>
-    <!-- ADMOB SCRIPT -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -28,45 +29,58 @@
 
 <div class="prize-banner">🏆 THIS WEEK: Win GHS 50 Airtime! Top 3 on Leaderboard</div>
 
-<!-- REAL ADMOB BANNER AD -->
 <div class="ad-banner">
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
-     data-ad-slot="1234567890"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
-<div id="main-content">
-<h2 style="padding:10px;">Today's Predictions</h2>
-<div class="match-card">
-    <p style="font-size:12px; color:#666;">Premier League</p>
-    <div style="display:flex; justify-content:space-between;"><div>🏴 Arsenal</div><div><b>19:00</b><br>Today</div><div>🇧🇪 Man City</div></div>
-    <div class="odds-row">
-        <button class="odd-btn" onclick="placePrediction('Arsenal Win', 2.10)">1<br><span>2.10</span></button>
-        <button class="odd-btn" onclick="placePrediction('Draw', 3.40)">X<br><span>3.40</span></button>
-        <button class="odd-btn" onclick="placePrediction('Man City Win', 2.80)">2<br><span>2.80</span></button>
-    </div>
-</div>
-</div>
+<div id="main-content"></div>
 
 <div class="bottom-menu">
-    <div>⚽<br>Predict</div>
-    <div onclick="alert('Coming Soon')">🏆<br>Leaderboard</div>
-    <div onclick="alert('Invite friends')">👥<br>Invite</div>
-    <div onclick="alert('Win Prizes')">🎁<br>Prizes</div>
+    <div onclick="showPredict()">⚽<br>Predict</div>
+    <div onclick="showLeaderboard()">🏆<br>Leaderboard</div>
+    <div onclick="alert('Invite friends to get 5000 coins!')">👥<br>Invite</div>
+    <div onclick="alert('Prizes paid every Sunday')">🎁<br>Prizes</div>
 </div>
 
 <script>
 let walletBalance = parseFloat(localStorage.getItem("sbetCoins")) || 10000;
 let predictions = JSON.parse(localStorage.getItem("sbetPreds")) || [];
+let points = parseInt(localStorage.getItem("sbetPoints")) || 0;
+
 function updateWallet(){document.getElementById("wallet-balance").innerText = walletBalance.toLocaleString();}
-function placePrediction(game, odds){walletBalance -= 100; predictions.push({game, odds, stake:100}); localStorage.setItem("sbetCoins",walletBalance); localStorage.setItem("sbetPreds",JSON.stringify(predictions)); alert("Prediction Placed! -100 Coins\n"+game+" @ "+odds); updateWallet();}
-updateWallet();
-</script>
-</body>
-</html>
+
+function placePrediction(game, odds){
+  walletBalance -= 100; 
+  points += 10; // 10 points per prediction
+  predictions.push({game, odds, stake:100}); 
+  localStorage.setItem("sbetCoins",walletBalance); 
+  localStorage.setItem("sbetPreds",JSON.stringify(predictions));
+  localStorage.setItem("sbetPoints",points);
+  alert("Prediction Placed! -100 Coins\n+10 Points"); 
+  updateWallet();
+}
+
+function showPredict(){
+  document.getElementById("main-content").innerHTML = `
+  <h2 style="padding:10px;">Today's Predictions</h2>
+  <div class="match-card">
+      <p style="font-size:12px; color:#666;">Premier League</p>
+      <div style="display:flex; justify-content:space-between;"><div>🏴 Arsenal</div><div><b>19:00</b><br>Today</div><div>🇧🇪 Man City</div></div>
+      <div class="odds-row">
+          <button class="odd-btn" onclick="placePrediction('Arsenal Win', 2.10)">1<br><span>2.10</span></button>
+          <button class="odd-btn" onclick="placePrediction('Draw', 3.40)">X<br><span>3.40</span></button>
+          <button class="odd-btn" onclick="placePrediction('Man City Win', 2.80)">2<br><span>2.80</span></button>
+      </div>
+  </div>`;
+}
+
+function showLeaderboard(){
+  document.getElementById("main-content").innerHTML = `
+  <h2 style="padding:10px;">🏆 Weekly Leaderboard</h2>
+  <div class="leader-row rank1"><span>1. You</span><span>${points} pts</span></div>
+  <div class="leader-row rank2"><span>2. Kwame</span><span>240 pts</span></div>
+  <div class="leader-row rank3"><span>3. Ama</span><span>180 pts</span></div>
+  <div class="leader-row"><span>4. Kofi</span><span>150 pts</span></div>
+  <div class="leader-row"><span>5. Aisha</span><span>120 pts</span></div>
+  <p style="text-align:center; padding:10px; color:#666;">Make predictions to climb
