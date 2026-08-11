@@ -1,44 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SBET</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-
-<!-- RED HEADER -->
-<div class="header">
-    <h1>SBET</h1>
-    <div class="wallet-top">GHS <span id="wallet-balance">0.00</span></div>
+<!-- TOP BANNERS -->
+<div class="top-banners">
+    <div class="top-banner" style="background:linear-gradient(45deg,#ff6b6b,#ee5a6f);">Daily Free Bet<br>Rains</div>
+    <div class="top-banner" style="background:linear-gradient(45deg,#4facfe,#00f2fe);">Lucky<br>Numbers</div>
+    <div class="top-banner" style="background:linear-gradient(45deg,#43e97b,#38f9d7);">Aviator<br>Missions</div>
+    <div class="top-banner" style="background:linear-gradient(45deg,#fa709a,#fee140);">Spin Da'<br>Bottle</div>
 </div>
 
-<!-- THIS IS THE PART THAT CHANGES -->
-<div id="main-content">
-    <!-- DEPOSIT + WITHDRAW -->
-    <div style="background:#e00000; padding:10px;">
-        <button onclick="deposit()" style="width:100%; background:#00a651; color:white; border:none; padding:12px; border-radius:5px; font-weight:bold;">Deposit</button>
-        <button onclick="withdraw()" style="width:100%; background:#333; color:white; border:none; padding:12px; border-radius:5px; font-weight:bold; margin-top:8px;">Withdraw</button>
+<!-- CATEGORY TABS -->
+<div class="category-tabs">
+    <div>⚽ All Sports</div>
+    <div>📺 Live</div>
+    <div>✈️ Aviator</div>
+    <div>V Virtuals</div>
+    <div>⋯ More</div>
+</div>
+
+<!-- LEAGUE TABS -->
+<div class="league-tabs">
+    <div class="league-tab" style="border-bottom:3px solid #e00000;">TODAY'S FOOTBALL</div>
+    <div class="league-tab">IN NEXT 3 HOURS</div>
+    <div class="league-tab">UEFA SUPER CUP</div>
+    <div class="league-tab">CHAMPIONS LEAGUE</div>
+</div>
+
+<h2 style="padding:10px;">Featured</h2>
+
+<!-- MATCH CARD -->
+<div class="match-card">
+    <p style="font-size:12px; color:#666;">UEFA Champions League</p>
+    <div class="match-teams">
+        <div>🏴 FC Kairat Almaty</div>
+        <div><b>19:00</b><br>Today</div>
+        <div>🇧🇬 PFC Levski Sofia</div>
     </div>
-
-    <!-- GAMES -->
-    <h2 style="padding:10px;">⚽ Popular Games</h2>
-    <div class="bet-card">
-        <p><b>Arsenal vs Chelsea</b></p>
-        <p>Home 1.90 | Draw 3.40 | Away 2.10</p>
-        <button onclick="placeBet(20, 'Arsenal vs Chelsea')" style="width:100%; background:#e00000; color:white; border:none; padding:10px; border-radius:5px;">Bet GHS 20</button>
+    <div class="odds-row">
+        <div class="odd-btn" onclick="placeBet(20, 'Kairat Win')">1<br><span>2.65</span></div>
+        <div class="odd-btn" onclick="placeBet(20, 'Draw')">X<br><span>3.21</span></div>
+        <div class="odd-btn" onclick="placeBet(20, 'Levski Win')">2<br><span>2.85</span></div>
     </div>
 </div>
-
-<!-- BOTTOM MENU -->
-<div class="bottom-menu">
-    <div onclick="showHome()">⚽<br>Sports</div>
-    <div onclick="alert('Menu')">≡<br>Menu</div>
-    <div onclick="alert('Games')">🎮<br>Games</div>
-    <div onclick="showBets()">💰<br>Bets</div>
-    <div onclick="alert('Me')">👤<br>Me</div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
