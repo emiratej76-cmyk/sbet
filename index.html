@@ -1,6 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SBET</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>SBET</h1>
+<h3 id="wallet-balance">Mo Wallet: GHS 0.00</h3>
+
+<button onclick="deposit()">Deposit</button>
+<button onclick="withdraw()">Withdraw</button>
+<button onclick="placeBet(50)">Place Bet GHS 50</button>
+<button onclick="winBet(50, 2.00)">Win Bet</button>
+
 <div style="background:#161b22; padding:10px; margin-top:15px; border-radius:8px;">
     <h3>Bet Slip</h3>
     <p>Team A vs Team B</p>
     <p>Odds: 2.00</p>
     <button onclick="placeBet(20)">Add GHS 20 Bet</button>
 </div>
+
+<script src="script.js"></script>
+</body>
+</html>
