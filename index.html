@@ -1,143 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SBET</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #f2f2f2;
-            font-family: Arial;
-            margin: 0;
-            padding-bottom: 70px;
-        }
-        .header {
-            background: #e00000;
-            color: white;
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header h1 { color: white; margin: 0; font-size: 22px; }
-        .wallet-top { color: #ffeb3b; font-weight: bold; font-size: 18px; }
-        
-        .bet-card {
-            background: white;
-            margin: 10px;
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .bet-btn {
-            background: #e00000; 
-            color: white; 
-            border: none; 
-            padding: 10px; 
-            width: 100%; 
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .deposit-btn {
-            flex:1; 
-            background:#00a651; 
-            color:white; 
-            border:none; 
-            padding:10px; 
-            border-radius:5px; 
-            font-weight:bold;
-        }
-
-        .bottom-menu {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 6px 0;
-            border-top: 1px solid #ccc;
-            font-size: 11px;
-            text-align: center;
-            z-index: 999;
-        }
-        .bottom-menu div { cursor: pointer; color: #666; }
-        .bottom-menu div:active { color: #e00000; }
-    </style>
-</head>
-<body>
-
-<!-- RED TOP BAR -->
-<div class="header">
-    <h1>SBET</h1>
-    <div class="wallet-top">GHS <span id="wallet-balance">0.00</span></div>
-</div>
-
-<!-- DEPOSIT BUTTONS -->
-<div style="background:#e00000; padding:8px;">
-    <button onclick="deposit()" class="deposit-btn">Deposit</button>
-</div>
-
-<!-- PAGE CONTENT -->
-<div id="page-content">
-    <!-- SPORTS PAGE -->
-    <div id="sports-page">
-        <h3 style="padding:10px;">⚽ Popular Games</h3>
-        <div class="bet-card">
-            <p><b>Arsenal vs Chelsea</b></p>
-            <p>Home 1.90 | Draw 3.40 | Away 2.10</p>
-            <button class="bet-btn" onclick="placeBet('Arsenal vs Chelsea', 1.90, 20)">Bet GHS 20</button>
+<!-- BET SLIP - SLIDES UP FROM BOTTOM -->
+<div id="betslip" style="display:none; position:fixed; bottom:70px; left:0; width:100%; background:#222; color:white; z-index:998; border-radius:10px 10px 0 0;">
+    <div style="background:#333; padding:10px; display:flex; justify-content:space-between;">
+        <div><span style="background:green; padding:3px 8px; border-radius:5px;">1</span> REAL</div>
+        <span onclick="closeBetslip()" style="font-size:20px;">X</span>
+    </div>
+    
+    <div style="display:flex;">
+        <div class="bet-tab active">Single</div>
+        <div class="bet-tab">Multiple</div>
+        <div class="bet-tab">System</div>
+    </div>
+    
+    <div id="betslip-games" style="background:#2a2a2a; padding:10px;">
+        <!-- Games will appear here -->
+    </div>
+    
+    <div style="padding:10px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span>Stake</span>
+            <input id="betslip-stake" type="number" placeholder="min. 0.10" style="width:100px; padding:5px;">
         </div>
-        <div class="bet-card">
-            <p><b>Man Utd vs Liverpool</b></p>
-            <p>Home 2.50 | Draw 3.20 | Away 1.85</p>
-            <button class="bet-btn" onclick="placeBet('Man Utd vs Liverpool', 2.50, 20)">Bet GHS 20</button>
+        <div style="display:flex; gap:5px; margin-bottom:10px;">
+            <button onclick="setStake(3)">+3</button>
+            <button onclick="setStake(5)">+5</button>
+            <button onclick="setStake(10)">+10</button>
         </div>
     </div>
-
-    <!-- BETS PAGE -->
-    <div id="bets-page" style="display:none;"></div>
+    
+    <div style="display:flex;">
+        <button style="flex:1; background:green; color:white; border:none; padding:15px;" onclick="placeBetFromSlip()">Place Bet</button>
+    </div>
 </div>
-
-<!-- BOTTOM MENU -->
-<div class="bottom-menu">
-    <div onclick="showPage('sports-page')">⚽<br>Sports</div>
-    <div>≡<br>Menu</div>
-    <div>🎮<br>Games</div>
-    <div onclick="showPage('bets-page')">💰<br>Bets</div>
-    <div>👤<br>Me</div>
-</div>
-
-<script>
-let wallet = parseFloat(localStorage.getItem('wallet')) || 0;
-let openBets = JSON.parse(localStorage.getItem('openBets')) || [];
-
-function updateUI() {
-    document.getElementById('wallet-balance').innerText = wallet.toFixed(2);
-    localStorage.setItem('wallet', wallet);
-}
-
-function deposit() {
-    let amount = parseFloat(prompt("Enter deposit amount:"));
-    if(amount > 0) { wallet += amount; updateUI(); }
-}
-
-function placeBet(team, odds, stake) {
-    if(stake <= wallet) {
-        wallet -= stake;
-        alert(`Bet placed on ${team}!`);
-        updateUI();
-    } else { alert("Not enough money! Deposit first"); }
-}
-
-function showPage(pageId) {
-    document.getElementById('sports-page').style.display = 'none';
-    document.getElementById('bets-page').style.display = 'none';
-    document.getElementById(pageId).style.display = 'block';
-}
-
-updateUI();
-</script>
-
-</body>
-</html>
