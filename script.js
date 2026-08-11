@@ -1,45 +1,30 @@
-let wallet = 0; // start at 0
+let wallet = parseFloat(localStorage.getItem('wallet')) || 0;
 
 function updateWallet() {
     document.getElementById('wallet-balance').innerText = `Mo Wallet: GHS ${wallet.toFixed(2)}`;
+    localStorage.setItem('wallet', wallet);
 }
 
 function deposit() {
     let amount = parseFloat(prompt("Enter deposit amount:"));
-    if(amount > 0) {
-        wallet = wallet + amount;
-        alert(`Deposited GHS ${amount}. New Balance: ${wallet}`);
-        updateWallet();
-    }
-}
-
-function placeBet(stake) {
-    if(stake <= wallet) {
-        wallet = wallet - stake;
-        alert(`Bet placed: GHS ${stake}`);
-        updateWallet();
-    } else {
-        alert("Not enough money!");
-    }
-}
-
-function winBet(stake, odds) {
-    let winnings = stake * odds;
-    wallet = wallet + winnings;
-    alert(`You Won! GHS ${winnings}`);
-    updateWallet();
+    if(amount > 0) { wallet += amount; updateWallet(); }
 }
 
 function withdraw() {
     let amount = parseFloat(prompt("Enter withdraw amount:"));
-    if(amount <= wallet) {
-        wallet = wallet - amount;
-        alert(`Withdraw request: GHS ${amount}. Send MoMo to user.`);
-        updateWallet();
-    } else {
-        alert("Not enough balance!");
-    }
+    if(amount > 0 && amount <= wallet) { wallet -= amount; updateWallet(); }
 }
 
-// Load wallet on start
-window.onload = updateWallet;
+function placeBet(amount) {
+    if(amount <= wallet) { wallet -= amount; updateWallet(); alert(`Bet of GHS ${amount} placed!`); }
+    else { alert("Not enough money!"); }
+}
+
+function winBet(stake, odds) {
+    let winnings = stake * odds;
+    wallet += winnings;
+    updateWallet();
+    alert(`You won GHS ${winnings.toFixed(2)}!`);
+}
+
+updateWallet(); // load wallet on start
