@@ -1,4 +1,41 @@
-<div style="padding:10px;">
-    <button onclick="placeBet('Arsenal vs Chelsea', 1.90, 20)">Bet Arsenal GHS 20</button>
-    <button onclick="placeBet('Man Utd vs Liverpool', 2.50, 20)">Bet ManU GHS 20</button>
-</div>
+body {
+    background: #f2f2f2;
+    font-family: Arial;
+    margin: 0;
+    padding-bottom: 70px;
+}
+.header {
+    background: #e00000;
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header h1 { color: white; margin: 0; font-size: 22px; }
+.wallet-top { color: #ffeb3b; font-weight: bold; font-size: 18px; }
+
+.bet-card {
+    background: white;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 6px 0;
+    border-top: 1px solid #ccc;
+    font-size: 11px;
+    text-align: center;
+    z-index: 999;
+}
+.bottom-menu div { cursor: pointer; color: #666; }
+.bottom-menu div:active { color: #e00000; }
