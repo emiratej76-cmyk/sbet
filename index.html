@@ -13,40 +13,38 @@
     <div class="wallet-top">GHS <span id="wallet-balance">0.00</span></div>
 </div>
 
-<!-- TABS -->
-<div class="tabs">
-    <button class="tab active">Open Bets (0)</button>
-    <button class="tab">Bet History</button>
+<!-- DEPOSIT BUTTONS -->
+<div style="background:#e00000; padding:8px; display:flex; gap:8px;">
+    <button onclick="deposit()" style="flex:1; background:#00a651; color:white; border:none; padding:10px; border-radius:5px; font-weight:bold;">Deposit</button>
 </div>
 
-<!-- FILTERS -->
-<div class="filters">
-    <button class="filter active">All</button>
-    <button class="filter">Cashout Available</button>
-    <button class="filter">Live Games</button>
-</div>
-
-<!-- OPEN BET CARD EXAMPLE -->
-<div class="bet-card">
-    <div class="bet-header">
-        <b>Multiple</b>
-        <span class="rebet">↻ Rebet</span>
-    </div>
-    <div class="bet-body">
-        <div>
+<!-- PAGE CONTENT -->
+<div id="page-content">
+    <!-- SPORTS PAGE - THIS IS THE HOME -->
+    <div id="sports-page">
+        <h3 style="padding:10px;">⚽ Popular Games</h3>
+        <div class="bet-card" onclick="placeBet('Arsenal vs Chelsea', 1.90, 20)">
             <p><b>Arsenal vs Chelsea</b></p>
-            <p class="stake">Stake <b>GHS 20.00</b></p>
+            <p>Home 1.90 | Draw 3.40 | Away 2.10</p>
+            <button style="background:#e00000; color:white; border:none; padding:8px; width:100%; border-radius:5px;">Bet GHS 20</button>
         </div>
-        <button class="cashout">Cashout<br>GHS 35.00</button>
+        <div class="bet-card" onclick="placeBet('Man Utd vs Liverpool', 2.50, 20)">
+            <p><b>Man Utd vs Liverpool</b></p>
+            <p>Home 2.50 | Draw 3.20 | Away 1.85</p>
+            <button style="background:#e00000; color:white; border:none; padding:8px; width:100%; border-radius:5px;">Bet GHS 20</button>
+        </div>
     </div>
+
+    <!-- BETS PAGE - THIS IS YOUR SCREENSHOT -->
+    <div id="bets-page" style="display:none;"></div>
 </div>
 
-<!-- BOTTOM MENU -->
+<!-- BOTTOM MENU - NOW CLICKABLE -->
 <div class="bottom-menu">
-    <div>⚽<br>Sports</div>
+    <div onclick="showPage('sports-page')">⚽<br>Sports</div>
     <div>≡<br>Menu</div>
     <div>🎮<br>Games</div>
-    <div>💰<br>Bets</div>
+    <div onclick="showPage('bets-page')">💰<br>Bets</div>
     <div>👤<br>Me</div>
 </div>
 
