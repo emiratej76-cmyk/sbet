@@ -1,41 +1,66 @@
-<!-- TOP BANNERS -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SBET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin:0; font-family: Arial; background:#f5f5f5; padding-bottom:60px; }
+        .header { background:#e00000; color:white; padding:12px; display:flex; justify-content:space-between; align-items:center; }
+        .wallet-top { font-weight:bold; color:#ffd700; }
+        .top-banners { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#fff; }
+        .top-banner { min-width:130px; height:90px; border-radius:8px; color:white; padding:10px; font-size:13px; font-weight:bold; flex-shrink:0; }
+        .category-tabs { display:flex; overflow-x:auto; gap:25px; padding:12px 10px; background:#fff; border-bottom:1px solid #eee; font-size:13px; }
+        .league-tabs { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#f5f5f5; }
+        .league-tab { padding:8px 14px; background:#fff; border-radius:20px; font-weight:bold; font-size:12px; white-space:nowrap; border:1px solid #ddd; }
+        .match-card { background:#fff; margin:10px; padding:12px; border-radius:10px; }
+        .odds-row { display:flex; justify-content:space-between; margin-top:12px; gap:8px; }
+        .odd-btn { flex:1; background:#f0f0f0; padding:10px 0; border-radius:6px; font-weight:bold; text-align:center; border:none; }
+        .odd-btn span { color:#e00000; font-size:16px; display:block; }
+        .bottom-menu { position:fixed; bottom:0; width:100%; background:white; display:flex; justify-content:space-around; padding:8px 0; border-top:1px solid #ddd; }
+        .bet-card { background:white; margin:10px; padding:12px; border-radius:8px; }
+    </style>
+</head>
+<body>
+<div class="header"><h1>SBET</h1><div class="wallet-top">GHS <span id="wallet-balance">0.00</span></div></div>
+
+<div id="main-content">
 <div class="top-banners">
     <div class="top-banner" style="background:linear-gradient(45deg,#ff6b6b,#ee5a6f);">Daily Free Bet<br>Rains</div>
     <div class="top-banner" style="background:linear-gradient(45deg,#4facfe,#00f2fe);">Lucky<br>Numbers</div>
     <div class="top-banner" style="background:linear-gradient(45deg,#43e97b,#38f9d7);">Aviator<br>Missions</div>
     <div class="top-banner" style="background:linear-gradient(45deg,#fa709a,#fee140);">Spin Da'<br>Bottle</div>
 </div>
-
-<!-- CATEGORY TABS -->
-<div class="category-tabs">
-    <div>⚽ All Sports</div>
-    <div>📺 Live</div>
-    <div>✈️ Aviator</div>
-    <div>V Virtuals</div>
-    <div>⋯ More</div>
-</div>
-
-<!-- LEAGUE TABS -->
-<div class="league-tabs">
-    <div class="league-tab" style="border-bottom:3px solid #e00000;">TODAY'S FOOTBALL</div>
-    <div class="league-tab">IN NEXT 3 HOURS</div>
-    <div class="league-tab">UEFA SUPER CUP</div>
-    <div class="league-tab">CHAMPIONS LEAGUE</div>
-</div>
-
+<div class="category-tabs"><div>⚽ All Sports</div><div>📺 Live</div><div>✈️ Aviator</div><div>V Virtuals</div><div>⋯ More</div></div>
+<div class="league-tabs"><div class="league-tab" style="border-bottom:3px solid #e00000;">TODAY'S FOOTBALL</div><div class="league-tab">IN NEXT 3 HOURS</div><div class="league-tab">UEFA SUPER CUP</div></div>
 <h2 style="padding:10px;">Featured</h2>
-
-<!-- MATCH CARD -->
 <div class="match-card">
     <p style="font-size:12px; color:#666;">UEFA Champions League</p>
-    <div class="match-teams">
-        <div>🏴 FC Kairat Almaty</div>
-        <div><b>19:00</b><br>Today</div>
-        <div>🇧🇬 PFC Levski Sofia</div>
-    </div>
+    <div style="display:flex; justify-content:space-between;"><div>🏴 FC Kairat Almaty</div><div><b>19:00</b><br>Today</div><div>🇧🇬 PFC Levski Sofia</div></div>
     <div class="odds-row">
-        <div class="odd-btn" onclick="placeBet(20, 'Kairat Win')">1<br><span>2.65</span></div>
-        <div class="odd-btn" onclick="placeBet(20, 'Draw')">X<br><span>3.21</span></div>
-        <div class="odd-btn" onclick="placeBet(20, 'Levski Win')">2<br><span>2.85</span></div>
+        <button class="odd-btn" onclick="placeBet(20, 'Kairat Win')">1<br><span>2.65</span></button>
+        <button class="odd-btn" onclick="placeBet(20, 'Draw')">X<br><span>3.21</span></button>
+        <button class="odd-btn" onclick="placeBet(20, 'Levski Win')">2<br><span>2.85</span></button>
     </div>
 </div>
+</div>
+
+<div class="bottom-menu">
+    <div onclick="showHome()">⚽<br>Sports</div>
+    <div onclick="alert('Menu')">≡<br>Menu</div>
+    <div onclick="alert('Games')">🎮<br>Games</div>
+    <div onclick="showBets()">💰<br>Bets</div>
+    <div onclick="alert('Me')">👤<br>Me</div>
+</div>
+
+<script>
+let walletBalance = parseFloat(localStorage.getItem("sbetWallet")) || 0;
+let openBets = JSON.parse(localStorage.getItem("sbetBets")) || [];
+function updateWallet(){document.getElementById("wallet-balance").innerText = walletBalance.toFixed(2);}
+function deposit(){let a=prompt("Deposit:");if(a>0){walletBalance+=parseFloat(a);localStorage.setItem("sbetWallet",walletBalance);updateWallet();}}
+function withdraw(){let a=prompt("Withdraw:");if(walletBalance>=a){walletBalance-=parseFloat(a);localStorage.setItem("sbetWallet",walletBalance);updateWallet();}}
+function placeBet(amount,game){if(walletBalance>=amount){walletBalance-=amount;openBets.push({game,stake:amount,win:(amount*1.9).toFixed(2),cashout:(amount*0.8).toFixed(2)});localStorage.setItem("sbetBets",JSON.stringify(openBets));localStorage.setItem("sbetWallet",walletBalance);updateWallet();alert("Bet Placed!")}}
+function showBets(){let h="<h2 style='padding:10px;'>My Bets</h2>";openBets.forEach((b,i)=>{h+=`<div class='bet-card'><p><b>${b.game}</b></p><p>Stake: ${b.stake}</p><button onclick='cashout(${i})' style='width:100%;background:#00a651;color:white;border:none;padding:10px;'>Cashout ${b.cashout}</button></div>`});document.getElementById("main-content").innerHTML=h;updateWallet();}
+function showHome(){location.reload();}updateWallet();
+</script>
+</body>
+</html>
