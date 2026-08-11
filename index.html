@@ -14,9 +14,11 @@
    .odd-btn:hover { background:#00a651; color:white; }
    .odd-btn span { color:#00a651; font-size:16px; display:block; }
    .bottom-menu { position:fixed; bottom:0; width:100%; background:white; display:flex; justify-content:space-around; padding:8px 0; border-top:1px solid #ddd; }
-   .bottom-menu div { text-align:center; font-size:11px; }
-   .ad-space { background:#ddd; margin:10px; height:50px; text-align:center; line-height:50px; color:#666; }
+   .bottom-menu div { text-align:center; font-size:11px; cursor:pointer; }
+   .ad-banner { margin:10px; text-align:center; }
     </style>
+    <!-- ADMOB SCRIPT -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="header">
@@ -25,7 +27,19 @@
 </div>
 
 <div class="prize-banner">🏆 THIS WEEK: Win GHS 50 Airtime! Top 3 on Leaderboard</div>
-<div class="ad-space">AD SPACE - You earn here</div>
+
+<!-- REAL ADMOB BANNER AD -->
+<div class="ad-banner">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
 
 <div id="main-content">
 <h2 style="padding:10px;">Today's Predictions</h2>
