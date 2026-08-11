@@ -1,11 +1,17 @@
 function showBets() {
-    let html = "<h2 style='padding:10px;'>My Open Bets</h2>";
+    let mainContent = `
+    <div class="header">
+        <h1>SBET</h1>
+        <div class="wallet-top">GHS <span id="wallet-balance">${walletBalance.toFixed(2)}</span></div>
+    </div>
+    <h2 style='padding:10px;'>My Open Bets</h2>
+    `;
     
     if(openBets.length == 0) {
-        html += "<p style='padding:20px; text-align:center;'>No open bets yet. Place a bet first!</p>";
+        mainContent += "<p style='padding:20px; text-align:center;'>No open bets yet. Place a bet first!</p>";
     } else {
         openBets.forEach((bet, index) => {
-            html += `
+            mainContent += `
             <div class="bet-card">
                 <p><b>${bet.game}</b></p>
                 <p>Stake: GHS ${bet.stake}</p>
@@ -15,38 +21,16 @@ function showBets() {
             `;
         });
     }
-    document.body.innerHTML = html + document.querySelector('.bottom-menu').outerHTML;
-}
 
-function cashout(index) {
-    let bet = openBets[index];
-    walletBalance += bet.cashout;
-    localStorage.setItem("sbetWallet", walletBalance);
-    openBets.splice(index, 1);
-    localStorage.setItem("sbetBets", JSON.stringify(openBets));
-    updateWallet();
-    alert("Cashout Successful! +GHS " + bet.cashout);
-    showBets();
-}
+    mainContent += `
+    <div class="bottom-menu">
+        <div onclick="location.reload()">⚽<br>Sports</div>
+        <div onclick="alert('Menu')">≡<br>Menu</div>
+        <div onclick="alert('Games')">🎮<br>Games</div>
+        <div onclick="showBets()">💰<br>Bets</div>
+        <div onclick="alert('Me')">👤<br>Me</div>
+    </div>
+    `;
 
-// UPDATE placeBet to SAVE the bet
-function placeBet(amount) {
-    if(walletBalance >= amount) {
-        walletBalance -= amount;
-        
-        // Save bet to openBets
-        let newBet = {
-            game: "Arsenal vs Chelsea", // we will make this dynamic later
-            stake: amount,
-            win: (amount * 1.90).toFixed(2),
-            cashout: (amount * 0.8).toFixed(2)
-        };
-        openBets.push(newBet);
-        localStorage.setItem("sbetBets", JSON.stringify(openBets));
-        localStorage.setItem("sbetWallet", walletBalance);
-        updateWallet();
-        alert("Bet Placed! GHS " + amount + " staked");
-    } else {
-        alert("Not enough money! Deposit first");
-    }
+    document.body.innerHTML = mainContent;
 }
