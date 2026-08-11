@@ -1,10 +1,57 @@
-button {
-    background: #00ff88;
-    color: black;
-    border: none;
+body {
+    background: #f2f2f2;
+    font-family: Arial;
+    margin: 0;
+    padding-bottom: 80px;
+}
+.header {
+    background: #e00000;
+    color: white;
     padding: 12px;
-    margin: 5px 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header h1 { color: white; margin: 0; font-size: 22px; }
+.wallet-top { color: #ffeb3b; font-weight: bold; font-size: 18px; }
+
+.tabs { display: flex; background: #ddd; }
+.tab { flex: 1; padding: 12px; border: none; background: #ddd; }
+.tab.active { background: white; font-weight: bold; }
+
+.filters { display: flex; gap: 5px; padding: 10px; }
+.filter { padding: 8px 12px; border: none; border-radius: 5px; background: #e0e0e0; }
+.filter.active { background: #333; color: white; }
+
+.bet-card {
+    background: white;
+    margin: 10px;
     border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.bet-header { display: flex; justify-content: space-between; }
+.rebet { color: green; font-size: 14px; }
+.bet-body { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+.stake { color: gray; }
+.cashout {
+    background: #00a651;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
     font-weight: bold;
-    font-size: 14px;
+}
+
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    border-top: 1px solid #ccc;
+    font-size: 12px;
+    text-align: center;
 }
