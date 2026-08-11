@@ -1,10 +1,11 @@
-function placeBet(amount) {
-    if(walletBalance >= amount) {
-        walletBalance -= amount;
+function withdraw() {
+    let amount = prompt("How much to withdraw?");
+    if(amount && walletBalance >= amount) {
+        walletBalance -= parseFloat(amount);
         localStorage.setItem("sbetWallet", walletBalance);
         updateWallet();
-        alert("Bet Placed! GHS " + amount + " staked");
+        alert("Withdraw GHS " + amount + " Successful!");
     } else {
-        alert("Not enough money! Deposit first");
+        alert("Not enough money!");
     }
 }
